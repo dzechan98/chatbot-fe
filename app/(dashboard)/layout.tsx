@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,23 +14,54 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Bot, LayoutDashboard, MessageSquare, Settings, User, LogOut, Menu, X, Bell } from "lucide-react"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+} from "@/components/ui/dropdown-menu";
+import {
+  Bot,
+  LayoutDashboard,
+  Settings,
+  User,
+  LogOut,
+  Menu,
+  X,
+  Bell,
+  Users,
+  BarChart3,
+  ShieldAlert,
+} from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Badge } from "@/components/ui/badge";
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const pathname = usePathname()
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
+  // Check for admin role - in a real app, this would be from an auth provider
+  useEffect(() => {
+    // Simulate checking for admin role
+    const isAdmin = true; // This would be from your auth context
+    if (!isAdmin) {
+      router.push("/login");
+    }
+  }, [router]);
 
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Chat", href: "/chat", icon: MessageSquare },
+    { name: "Users", href: "/users", icon: Users, badge: "23" },
+    { name: "Analytics", href: "/analytics", icon: BarChart3 },
+    { name: "Security", href: "/security", icon: ShieldAlert },
     { name: "Settings", href: "/settings", icon: Settings },
-  ]
+  ];
+
+  // Simulate logout
+  const handleLogout = () => {
+    router.push("/login");
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -52,7 +83,11 @@ export default function DashboardLayout({
                       <Bot className="w-6 h-6 text-purple-600" />
                       <span className="text-xl font-bold">ChatAssist</span>
                     </Link>
-                    <Button variant="ghost" size="icon" onClick={() => setIsMobileNavOpen(false)}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setIsMobileNavOpen(false)}
+                    >
                       <X className="w-5 h-5" />
                       <span className="sr-only">Close menu</span>
                     </Button>
@@ -62,15 +97,22 @@ export default function DashboardLayout({
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md ${
+                        className={`flex items-center justify-between gap-3 px-3 py-2 text-sm font-medium rounded-md ${
                           pathname === item.href
                             ? "bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400"
                             : "text-muted-foreground hover:bg-muted"
                         }`}
                         onClick={() => setIsMobileNavOpen(false)}
                       >
-                        <item.icon className="w-5 h-5" />
-                        {item.name}
+                        <div className="flex items-center gap-3">
+                          <item.icon className="w-5 h-5" />
+                          {item.name}
+                        </div>
+                        {item.badge && (
+                          <Badge variant="outline" className="ml-auto">
+                            {item.badge}
+                          </Badge>
+                        )}
                       </Link>
                     ))}
                   </nav>
@@ -80,6 +122,9 @@ export default function DashboardLayout({
             <Link href="/" className="flex items-center gap-2">
               <Bot className="w-6 h-6 text-purple-600" />
               <span className="text-xl font-bold">ChatAssist</span>
+              <Badge variant="outline" className="ml-1 font-normal">
+                Admin
+              </Badge>
             </Link>
           </div>
           <div className="flex items-center gap-4">
@@ -87,17 +132,24 @@ export default function DashboardLayout({
               <Bell className="w-5 h-5" />
               <span className="sr-only">Notifications</span>
             </Button>
+            <ModeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative w-8 h-8 rounded-full">
+                <Button
+                  variant="ghost"
+                  className="relative w-8 h-8 rounded-full"
+                >
                   <Avatar className="w-8 h-8">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                    <AvatarFallback>JD</AvatarFallback>
+                    <AvatarImage
+                      src="/placeholder.svg?height=32&width=32"
+                      alt="User"
+                    />
+                    <AvatarFallback>AD</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <User className="w-4 h-4 mr-2" />
@@ -108,7 +160,7 @@ export default function DashboardLayout({
                   <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
                   <LogOut className="w-4 h-4 mr-2" />
                   <span>Log out</span>
                 </DropdownMenuItem>
@@ -126,14 +178,21 @@ export default function DashboardLayout({
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md ${
+                className={`flex items-center justify-between gap-3 px-3 py-2 text-sm font-medium rounded-md ${
                   pathname === item.href
                     ? "bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400"
                     : "text-muted-foreground hover:bg-muted"
                 }`}
               >
-                <item.icon className="w-5 h-5" />
-                {item.name}
+                <div className="flex items-center gap-3">
+                  <item.icon className="w-5 h-5" />
+                  {item.name}
+                </div>
+                {item.badge && (
+                  <Badge variant="outline" className="ml-auto">
+                    {item.badge}
+                  </Badge>
+                )}
               </Link>
             ))}
           </nav>
@@ -145,5 +204,5 @@ export default function DashboardLayout({
         </main>
       </div>
     </div>
-  )
+  );
 }

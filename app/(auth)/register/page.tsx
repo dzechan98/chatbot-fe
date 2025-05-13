@@ -1,46 +1,64 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Loader2 } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Loader2 } from "lucide-react";
 
 export default function RegisterPage() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     // Simulate registration
     setTimeout(() => {
-      setIsLoading(false)
-      router.push("/dashboard")
-    }, 1500)
-  }
+      setIsLoading(false);
+      router.push("/dashboard");
+    }, 1500);
+  };
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="text-2xl">Create an account</CardTitle>
-        <CardDescription>Enter your information to create an account</CardDescription>
+    <Card className="w-full border-purple-200 dark:border-purple-900/30 shadow-lg transition-all duration-300 hover:shadow-purple-100 dark:hover:shadow-purple-900/20">
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl text-center">
+          Create an account
+        </CardTitle>
+        <CardDescription className="text-center">
+          Enter your information to create an account
+        </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
-            <Input id="name" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} required />
+            <Input
+              id="name"
+              placeholder="John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="transition-all duration-200 focus:border-purple-400 focus:ring-purple-400"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -51,6 +69,7 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="transition-all duration-200 focus:border-purple-400 focus:ring-purple-400"
             />
           </div>
           <div className="space-y-2">
@@ -61,6 +80,7 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="transition-all duration-200 focus:border-purple-400 focus:ring-purple-400"
             />
           </div>
           <div className="flex items-center space-x-2">
@@ -81,7 +101,11 @@ export default function RegisterPage() {
           </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700" disabled={isLoading}>
+          <Button
+            type="submit"
+            className="w-full bg-purple-600 hover:bg-purple-700 transition-all duration-200"
+            disabled={isLoading}
+          >
             {isLoading ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -93,12 +117,15 @@ export default function RegisterPage() {
           </Button>
           <div className="text-sm text-center text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="text-purple-600 hover:underline">
+            <Link
+              href="/login"
+              className="text-purple-600 hover:underline font-medium transition-colors"
+            >
               Login
             </Link>
           </div>
         </CardFooter>
       </form>
     </Card>
-  )
+  );
 }

@@ -1,6 +1,13 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Bot, MessageSquare, BarChart3, Shield } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  Bot,
+  MessageSquare,
+  BarChart3,
+  Shield,
+} from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export default function Home() {
   return (
@@ -13,17 +20,27 @@ export default function Home() {
             <span className="text-xl font-bold">ChatAssist</span>
           </div>
           <nav className="hidden space-x-4 md:flex">
-            <Link href="/features" className="text-sm font-medium transition-colors hover:text-purple-600">
+            <Link
+              href="/features"
+              className="text-sm font-medium transition-colors hover:text-purple-600"
+            >
               Features
             </Link>
-            <Link href="/pricing" className="text-sm font-medium transition-colors hover:text-purple-600">
+            <Link
+              href="/pricing"
+              className="text-sm font-medium transition-colors hover:text-purple-600"
+            >
               Pricing
             </Link>
-            <Link href="/about" className="text-sm font-medium transition-colors hover:text-purple-600">
+            <Link
+              href="/about"
+              className="text-sm font-medium transition-colors hover:text-purple-600"
+            >
               About
             </Link>
           </nav>
           <div className="flex items-center gap-4">
+            <ModeToggle />
             <Link href="/login">
               <Button variant="ghost" size="sm">
                 Login
@@ -40,21 +57,29 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="container px-4 py-24 mx-auto text-center sm:px-6 md:py-32">
-        <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl">
-          Your AI-Powered <span className="text-purple-600">Chat Assistant</span>
+        <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl animate-fade-in">
+          Your AI-Powered{" "}
+          <span className="text-purple-600">Chat Assistant</span>
         </h1>
-        <p className="max-w-2xl mx-auto mt-6 text-lg text-muted-foreground">
-          Experience the power of AI with our intelligent chat assistant. Get instant answers, insights, and assistance
-          for all your needs.
+        <p className="max-w-2xl mx-auto mt-6 text-lg text-muted-foreground animate-fade-in animation-delay-200">
+          Experience the power of AI with our intelligent chat assistant. Get
+          instant answers, insights, and assistance for all your needs.
         </p>
-        <div className="flex flex-col items-center justify-center gap-4 mt-10 sm:flex-row">
+        <div className="flex flex-col items-center justify-center gap-4 mt-10 sm:flex-row animate-fade-in animation-delay-300">
           <Link href="/register">
-            <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
+            <Button
+              size="lg"
+              className="bg-purple-600 hover:bg-purple-700 transition-all duration-300 hover:translate-y-[-2px]"
+            >
               Get Started <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
           <Link href="/features">
-            <Button variant="outline" size="lg">
+            <Button
+              variant="outline"
+              size="lg"
+              className="transition-all duration-300 hover:translate-y-[-2px]"
+            >
               Learn More
             </Button>
           </Link>
@@ -69,21 +94,24 @@ export default function Home() {
             <MessageSquare className="w-12 h-12 text-purple-600" />
             <h3 className="mt-4 text-xl font-bold">Smart Conversations</h3>
             <p className="mt-2 text-muted-foreground">
-              Engage in natural conversations with our AI that understands context and nuance.
+              Engage in natural conversations with our AI that understands
+              context and nuance.
             </p>
           </div>
           <div className="flex flex-col items-center p-6 text-center rounded-lg bg-card">
             <BarChart3 className="w-12 h-12 text-purple-600" />
             <h3 className="mt-4 text-xl font-bold">Insightful Analytics</h3>
             <p className="mt-2 text-muted-foreground">
-              Track your conversations and get insights on usage patterns and trends.
+              Track your conversations and get insights on usage patterns and
+              trends.
             </p>
           </div>
           <div className="flex flex-col items-center p-6 text-center rounded-lg bg-card">
             <Shield className="w-12 h-12 text-purple-600" />
             <h3 className="mt-4 text-xl font-bold">Secure & Private</h3>
             <p className="mt-2 text-muted-foreground">
-              Your conversations are encrypted and your data remains private and secure.
+              Your conversations are encrypted and your data remains private and
+              secure.
             </p>
           </div>
         </div>
@@ -97,12 +125,20 @@ export default function Home() {
               <Bot className="w-5 h-5 text-purple-600" />
               <span className="font-semibold">ChatAssist</span>
             </div>
-            <p className="text-sm text-muted-foreground">© 2025 ChatAssist. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">
+              © 2025 ChatAssist. All rights reserved.
+            </p>
             <div className="flex gap-4">
-              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground">
+              <Link
+                href="/terms"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 Terms
               </Link>
-              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
+              <Link
+                href="/privacy"
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 Privacy
               </Link>
             </div>
@@ -110,5 +146,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
